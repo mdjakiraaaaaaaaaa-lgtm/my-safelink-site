@@ -1,3 +1,41 @@
-<?php require_once __DIR__.'/includes/functions.php'; $page_title='Home'; $page_desc='Latest exam news, government job updates and preparation guides.'; require __DIR__.'/includes/header.php'; ?>
-<section class="hero"><div><span class="eyebrow">INFOROVA</span><h1>Useful information, explained simply.</h1><p>Explore fresh updates, exam resources, job information and practical guides.</p></div></section><?php render_ad('top'); ?>
-<section class="section-head"><h2>Latest Articles</h2><a href="<?=base_url('search.php')?>">View all</a></section><div class="grid"><?php $s=$pdo->query("SELECT a.*,c.name category_name,c.slug category_slug FROM articles a JOIN categories c ON c.id=a.category_id WHERE a.status='published' ORDER BY a.published_at DESC LIMIT 12"); foreach($s as $a): ?><article class="card"><div class="thumb">INFOROVA</div><div class="card-body"><a class="category" href="<?=base_url('category.php?slug='.rawurlencode($a['category_slug']))?>"><?=e($a['category_name'])?></a><h3><a href="<?=article_url($a['slug'])?>"><?=e($a['title'])?></a></h3><p><?=e($a['excerpt'])?></p><small><?=e(date('M d, Y',strtotime($a['published_at'])))?></small></div></article><?php endforeach; ?></div><?php require __DIR__.'/includes/footer.php'; ?>
+<?php 
+// যেকোনো লুকানো এরর স্ক্রিনে দেখানোর কোড
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// আপনার আসল ওয়েবসাইটের কোড
+require_once __DIR__.'/includes/functions.php'; 
+$page_title='Home'; 
+$page_desc='Latest exam news, government job updates and preparation guides.'; 
+require __DIR__.'/includes/header.php'; 
+?>
+<section class="hero">
+    <div>
+        <span class="eyebrow">INFOROVA</span>
+        <h1>Useful information, explained simply.</h1>
+        <p>Explore fresh updates, exam resources, job information and practical guides.</p>
+    </div>
+</section>
+<?php render_ad('top'); ?>
+<section class="section-head">
+    <h2>Latest Articles</h2>
+    <a href="<?=base_url('search.php')?>">View all</a>
+</section>
+<div class="grid">
+    <?php 
+    $s=$pdo->query("SELECT a.*,c.name category_name,c.slug category_slug FROM articles a JOIN categories c ON c.id=a.category_id WHERE a.status='published' ORDER BY a.published_at DESC LIMIT 12"); 
+    foreach($s as $a): 
+    ?>
+    <article class="card">
+        <div class="thumb">INFOROVA</div>
+        <div class="card-body">
+            <a class="category" href="<?=base_url('category.php?slug='.rawurlencode($a['category_slug']))?>"><?=e($a['category_name'])?></a>
+            <h3><a href="<?=article_url($a['slug'])?>"><?=e($a['title'])?></a></h3>
+            <p><?=e($a['excerpt'])?></p>
+            <small><?=e(date('M d, Y',strtotime($a['published_at'])))?></small>
+        </div>
+    </article>
+    <?php endforeach; ?>
+</div>
+<?php require __DIR__.'/includes/footer.php'; ?>
